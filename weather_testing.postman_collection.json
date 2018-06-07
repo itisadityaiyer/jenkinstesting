@@ -1,0 +1,75 @@
+{
+	"info": {
+		"_postman_id": "901f8bd4-a5b2-4306-941c-c0a21282b4c1",
+		"name": "weather_testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "weather_london_basic",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f953c6d5-c2d8-487b-bb16-f074776b74c7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "10997dee-f754-4fab-9ee5-ee85ff1bf41e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"High temp is higher than low temp\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var high = jsonData.main.temp_max - jsonData.main.temp_min;",
+							"    pm.expect(high).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"Is it warm?\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var high = jsonData.main.temp;",
+							"    pm.expect(high).to.be.above(293);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=f6e3d1871714d43815b421020181ffd5",
+					"protocol": "http",
+					"host": [
+						"samples",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "London,uk"
+						},
+						{
+							"key": "appid",
+							"value": "f6e3d1871714d43815b421020181ffd5"
+						}
+					]
+				},
+				"description": "Simple request for weather in London with my API Key"
+			},
+			"response": []
+		}
+	]
+}

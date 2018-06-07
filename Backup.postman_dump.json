@@ -1,0 +1,376 @@
+{
+	"version": 1,
+	"collections": [
+		{
+			"id": "901f8bd4-a5b2-4306-941c-c0a21282b4c1",
+			"name": "current_weather_testing",
+			"description": null,
+			"auth": null,
+			"events": null,
+			"variables": null,
+			"order": [
+				"ba2afa9b-00ca-4b53-8b70-5a6661e5d5cf",
+				"07425211-c790-4095-a1cf-5a3ac34749ce"
+			],
+			"folders_order": [],
+			"folders": [],
+			"requests": [
+				{
+					"id": "07425211-c790-4095-a1cf-5a3ac34749ce",
+					"name": "current_weather_princeton",
+					"url": "http://api.openweathermap.org/data/2.5/weather?q=Princeton&appid=f6e3d1871714d43815b421020181ffd5",
+					"description": "",
+					"data": null,
+					"dataMode": "params",
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [
+						{
+							"key": "q",
+							"value": "Princeton",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						},
+						{
+							"key": "appid",
+							"value": "f6e3d1871714d43815b421020181ffd5",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						}
+					],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f9704268-5976-42b1-b093-4b4628ce3c0b",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"pm.test(\"High temp is higher than low temp\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var high = jsonData.main.temp_max - jsonData.main.temp_min;",
+									"    pm.expect(high).to.be.above(0);",
+									"});",
+									"",
+									"pm.test(\"Testing whether it is too windy for playing frisbee\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var windSpeed = jsonData.wind.speed;",
+									"    pm.expect(windSpeed).to.be.below(5);",
+									"});",
+									"",
+									"pm.test(\"Location in Northern Hemisphere\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var lat = jsonData.coord.lat;",
+									"    pm.expect(lat).to.be.above(0);",
+									"});",
+									"",
+									"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+									" ",
+									"tests[\"Has Content-Type\"] = contentTypeHeaderExists;",
+									" ",
+									"if (contentTypeHeaderExists) {",
+									"    tests[\"Content-Type is application/json\"] = ",
+									"      responseHeaders[\"Content-Type\"].has(\"application/json\");",
+									"}"
+								]
+							}
+						}
+					],
+					"folder": null,
+					"preRequestScript": null,
+					"tests": "\n\npm.test(\"High temp is higher than low temp\", function () {\n    var jsonData = pm.response.json();\n    var high = jsonData.main.temp_max - jsonData.main.temp_min;\n    pm.expect(high).to.be.above(0);\n});\n\npm.test(\"Testing whether it is too windy for playing frisbee\", function () {\n    var jsonData = pm.response.json();\n    var windSpeed = jsonData.wind.speed;\n    pm.expect(windSpeed).to.be.below(5);\n});\n\npm.test(\"Location in Northern Hemisphere\", function () {\n    var jsonData = pm.response.json();\n    var lat = jsonData.coord.lat;\n    pm.expect(lat).to.be.above(0);\n});\n\nvar contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");\n \ntests[\"Has Content-Type\"] = contentTypeHeaderExists;\n \nif (contentTypeHeaderExists) {\n    tests[\"Content-Type is application/json\"] = \n      responseHeaders[\"Content-Type\"].has(\"application/json\");\n}",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "901f8bd4-a5b2-4306-941c-c0a21282b4c1",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "ba2afa9b-00ca-4b53-8b70-5a6661e5d5cf",
+					"name": "current_weather_london",
+					"url": "http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=f6e3d1871714d43815b421020181ffd5",
+					"description": "Simple request for weather in London with my API Key",
+					"data": null,
+					"dataMode": "params",
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [
+						{
+							"key": "q",
+							"value": "London,uk",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						},
+						{
+							"key": "appid",
+							"value": "f6e3d1871714d43815b421020181ffd5",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						}
+					],
+					"auth": null,
+					"events": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f953c6d5-c2d8-487b-bb16-f074776b74c7",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "806b06e0-c69e-4c7d-925b-46df4ac11de5",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"pm.test(\"High temp is higher than low temp\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var high = jsonData.main.temp_max - jsonData.main.temp_min;",
+									"    pm.expect(high).to.be.above(0);",
+									"});",
+									"",
+									"pm.test(\"Testing whether the weather is chilly\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var high = jsonData.main.temp;",
+									"    pm.expect(high).to.be.below(293);",
+									"});",
+									"",
+									"pm.test(\"Testing whether the conditions are good enough for me to go out\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var conditionID = jsonData.weather[0].id;",
+									"    pm.expect(conditionID).to.satisfy(function (num) {",
+									"        if (num < 313 || (800 <= num < 900)) {",
+									"            return true;",
+									"        } else {",
+									"            return false;",
+									"        }",
+									"    });",
+									"});",
+									"",
+									"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+									" ",
+									"tests[\"Has Content-Type\"] = contentTypeHeaderExists;",
+									" ",
+									"if (contentTypeHeaderExists) {",
+									"    tests[\"Content-Type is application/json\"] = ",
+									"      responseHeaders[\"Content-Type\"].has(\"application/json\");",
+									"}"
+								]
+							}
+						}
+					],
+					"folder": null,
+					"preRequestScript": null,
+					"tests": "\n\npm.test(\"High temp is higher than low temp\", function () {\n    var jsonData = pm.response.json();\n    var high = jsonData.main.temp_max - jsonData.main.temp_min;\n    pm.expect(high).to.be.above(0);\n});\n\npm.test(\"Testing whether the weather is chilly\", function () {\n    var jsonData = pm.response.json();\n    var high = jsonData.main.temp;\n    pm.expect(high).to.be.below(293);\n});\n\npm.test(\"Testing whether the conditions are good enough for me to go out\", function () {\n    var jsonData = pm.response.json();\n    var conditionID = jsonData.weather[0].id;\n    pm.expect(conditionID).to.satisfy(function (num) {\n        if (num < 313 || (800 <= num < 900)) {\n            return true;\n        } else {\n            return false;\n        }\n    });\n});\n\nvar contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");\n \ntests[\"Has Content-Type\"] = contentTypeHeaderExists;\n \nif (contentTypeHeaderExists) {\n    tests[\"Content-Type is application/json\"] = \n      responseHeaders[\"Content-Type\"].has(\"application/json\");\n}",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "901f8bd4-a5b2-4306-941c-c0a21282b4c1",
+					"headers": "",
+					"pathVariables": {}
+				}
+			]
+		},
+		{
+			"id": "d1648454-0236-4588-939b-3e088e7e4a8c",
+			"name": "foreceast_service_testing",
+			"description": null,
+			"auth": null,
+			"events": null,
+			"variables": null,
+			"order": [
+				"8f5e8ab9-32b2-47a2-9e80-8805a1183683",
+				"11dec958-c0a2-4470-a5d3-474964f42a65"
+			],
+			"folders_order": [],
+			"folders": [],
+			"requests": [
+				{
+					"id": "11dec958-c0a2-4470-a5d3-474964f42a65",
+					"name": "forecast_london",
+					"url": "http://api.openweathermap.org/data/2.5/forecast?id=2643743&type=hour&appid=f6e3d1871714d43815b421020181ffd5",
+					"description": "",
+					"data": null,
+					"dataMode": "params",
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [
+						{
+							"key": "id",
+							"value": "2643743",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						},
+						{
+							"key": "type",
+							"value": "hour",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						},
+						{
+							"key": "appid",
+							"value": "f6e3d1871714d43815b421020181ffd5",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						}
+					],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ea14df10-f41f-4c51-ac27-f4c51e723ee5",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"pm.test(\"High temp is higher than low temp\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var high = jsonData.list[0].main.temp_max - jsonData.list[0].main.temp_min;",
+									"    pm.expect(high).to.be.above(0);",
+									"});",
+									"",
+									"pm.test(\"Testing whether it is too windy for playing frisbee\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var windSpeed = jsonData.list[0].wind.speed;",
+									"    pm.expect(windSpeed).to.be.below(5);",
+									"});",
+									"",
+									"pm.test(\"Location in Northern Hemisphere\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var lat = jsonData.city.coord.lat;",
+									"    pm.expect(lat).to.be.above(0);",
+									"});",
+									"",
+									"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+									" ",
+									"tests[\"Has Content-Type\"] = contentTypeHeaderExists;",
+									" ",
+									"if (contentTypeHeaderExists) {",
+									"    tests[\"Content-Type is application/json\"] = ",
+									"      responseHeaders[\"Content-Type\"].has(\"application/json\");",
+									"}"
+								]
+							}
+						}
+					],
+					"folder": null,
+					"preRequestScript": null,
+					"tests": "\n\npm.test(\"High temp is higher than low temp\", function () {\n    var jsonData = pm.response.json();\n    var high = jsonData.list[0].main.temp_max - jsonData.list[0].main.temp_min;\n    pm.expect(high).to.be.above(0);\n});\n\npm.test(\"Testing whether it is too windy for playing frisbee\", function () {\n    var jsonData = pm.response.json();\n    var windSpeed = jsonData.list[0].wind.speed;\n    pm.expect(windSpeed).to.be.below(5);\n});\n\npm.test(\"Location in Northern Hemisphere\", function () {\n    var jsonData = pm.response.json();\n    var lat = jsonData.city.coord.lat;\n    pm.expect(lat).to.be.above(0);\n});\n\nvar contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");\n \ntests[\"Has Content-Type\"] = contentTypeHeaderExists;\n \nif (contentTypeHeaderExists) {\n    tests[\"Content-Type is application/json\"] = \n      responseHeaders[\"Content-Type\"].has(\"application/json\");\n}",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "d1648454-0236-4588-939b-3e088e7e4a8c",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "8f5e8ab9-32b2-47a2-9e80-8805a1183683",
+					"name": "forecast_princeton",
+					"url": "http://api.openweathermap.org/data/2.5/forecast?id=4906818&type=hour&appid=f6e3d1871714d43815b421020181ffd5",
+					"description": "",
+					"data": null,
+					"dataMode": "params",
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [
+						{
+							"key": "id",
+							"value": "4906818",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						},
+						{
+							"key": "type",
+							"value": "hour",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						},
+						{
+							"key": "appid",
+							"value": "f6e3d1871714d43815b421020181ffd5",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						}
+					],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b56c3b0a-3588-4c9a-bd53-d740347462aa",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"pm.test(\"High temp is higher than low temp\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var high = jsonData.list[0].main.temp_max - jsonData.list[0].main.temp_min;",
+									"    pm.expect(high).to.be.above(0);",
+									"});",
+									"",
+									"pm.test(\"Testing whether the weather is chilly\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var high = jsonData.list[0].main.temp;",
+									"    pm.expect(high).to.be.below(293);",
+									"});",
+									"",
+									"pm.test(\"Testing whether the conditions are good enough for me to go out\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var conditionID = jsonData.list[0].weather[0].id;",
+									"    pm.expect(conditionID).to.satisfy(function (num) {",
+									"        if (num < 313 || (800 <= num < 900)) {",
+									"            return true;",
+									"        } else {",
+									"            return false;",
+									"        }",
+									"    });",
+									"});",
+									"",
+									"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+									" ",
+									"tests[\"Has Content-Type\"] = contentTypeHeaderExists;",
+									" ",
+									"if (contentTypeHeaderExists) {",
+									"    tests[\"Content-Type is application/json\"] = ",
+									"      responseHeaders[\"Content-Type\"].has(\"application/json\");",
+									"}"
+								]
+							}
+						}
+					],
+					"folder": null,
+					"preRequestScript": null,
+					"tests": "\n\npm.test(\"High temp is higher than low temp\", function () {\n    var jsonData = pm.response.json();\n    var high = jsonData.list[0].main.temp_max - jsonData.list[0].main.temp_min;\n    pm.expect(high).to.be.above(0);\n});\n\npm.test(\"Testing whether the weather is chilly\", function () {\n    var jsonData = pm.response.json();\n    var high = jsonData.list[0].main.temp;\n    pm.expect(high).to.be.below(293);\n});\n\npm.test(\"Testing whether the conditions are good enough for me to go out\", function () {\n    var jsonData = pm.response.json();\n    var conditionID = jsonData.list[0].weather[0].id;\n    pm.expect(conditionID).to.satisfy(function (num) {\n        if (num < 313 || (800 <= num < 900)) {\n            return true;\n        } else {\n            return false;\n        }\n    });\n});\n\nvar contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");\n \ntests[\"Has Content-Type\"] = contentTypeHeaderExists;\n \nif (contentTypeHeaderExists) {\n    tests[\"Content-Type is application/json\"] = \n      responseHeaders[\"Content-Type\"].has(\"application/json\");\n}",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "d1648454-0236-4588-939b-3e088e7e4a8c",
+					"headers": "",
+					"pathVariables": {}
+				}
+			]
+		}
+	],
+	"environments": [],
+	"headerPresets": [],
+	"globals": []
+}

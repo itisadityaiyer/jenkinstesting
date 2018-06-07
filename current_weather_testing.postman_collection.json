@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "901f8bd4-a5b2-4306-941c-c0a21282b4c1",
+		"name": "current_weather_testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "current_weather_london",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f953c6d5-c2d8-487b-bb16-f074776b74c7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "806b06e0-c69e-4c7d-925b-46df4ac11de5",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"High temp is higher than low temp\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var high = jsonData.main.temp_max - jsonData.main.temp_min;",
+							"    pm.expect(high).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"Testing whether the weather is chilly\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var high = jsonData.main.temp;",
+							"    pm.expect(high).to.be.below(293);",
+							"});",
+							"",
+							"pm.test(\"Testing whether the conditions are good enough for me to go out\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var conditionID = jsonData.weather[0].id;",
+							"    pm.expect(conditionID).to.satisfy(function (num) {",
+							"        if (num < 313 || (800 <= num < 900)) {",
+							"            return true;",
+							"        } else {",
+							"            return false;",
+							"        }",
+							"    });",
+							"});",
+							"",
+							"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+							" ",
+							"tests[\"Has Content-Type\"] = contentTypeHeaderExists;",
+							" ",
+							"if (contentTypeHeaderExists) {",
+							"    tests[\"Content-Type is application/json\"] = ",
+							"      responseHeaders[\"Content-Type\"].has(\"application/json\");",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=f6e3d1871714d43815b421020181ffd5",
+					"protocol": "http",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "London,uk"
+						},
+						{
+							"key": "appid",
+							"value": "f6e3d1871714d43815b421020181ffd5"
+						}
+					]
+				},
+				"description": "Simple request for weather in London with my API Key"
+			},
+			"response": []
+		},
+		{
+			"name": "current_weather_princeton",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f9704268-5976-42b1-b093-4b4628ce3c0b",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"High temp is higher than low temp\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var high = jsonData.main.temp_max - jsonData.main.temp_min;",
+							"    pm.expect(high).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"Testing whether it is too windy for playing frisbee\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var windSpeed = jsonData.wind.speed;",
+							"    pm.expect(windSpeed).to.be.below(5);",
+							"});",
+							"",
+							"pm.test(\"Location in Northern Hemisphere\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var lat = jsonData.coord.lat;",
+							"    pm.expect(lat).to.be.above(0);",
+							"});",
+							"",
+							"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+							" ",
+							"tests[\"Has Content-Type\"] = contentTypeHeaderExists;",
+							" ",
+							"if (contentTypeHeaderExists) {",
+							"    tests[\"Content-Type is application/json\"] = ",
+							"      responseHeaders[\"Content-Type\"].has(\"application/json\");",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.openweathermap.org/data/2.5/weather?q=Princeton&appid=f6e3d1871714d43815b421020181ffd5",
+					"protocol": "http",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Princeton"
+						},
+						{
+							"key": "appid",
+							"value": "f6e3d1871714d43815b421020181ffd5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

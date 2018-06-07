@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "d1648454-0236-4588-939b-3e088e7e4a8c",
+		"name": "foreceast_service_testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "forecast_princeton",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b56c3b0a-3588-4c9a-bd53-d740347462aa",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"High temp is higher than low temp\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var high = jsonData.list[0].main.temp_max - jsonData.list[0].main.temp_min;",
+							"    pm.expect(high).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"Testing whether the weather is chilly\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var high = jsonData.list[0].main.temp;",
+							"    pm.expect(high).to.be.below(293);",
+							"});",
+							"",
+							"pm.test(\"Testing whether the conditions are good enough for me to go out\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var conditionID = jsonData.list[0].weather[0].id;",
+							"    pm.expect(conditionID).to.satisfy(function (num) {",
+							"        if (num < 313 || (800 <= num < 900)) {",
+							"            return true;",
+							"        } else {",
+							"            return false;",
+							"        }",
+							"    });",
+							"});",
+							"",
+							"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+							" ",
+							"tests[\"Has Content-Type\"] = contentTypeHeaderExists;",
+							" ",
+							"if (contentTypeHeaderExists) {",
+							"    tests[\"Content-Type is application/json\"] = ",
+							"      responseHeaders[\"Content-Type\"].has(\"application/json\");",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.openweathermap.org/data/2.5/forecast?id=4906818&type=hour&appid=f6e3d1871714d43815b421020181ffd5",
+					"protocol": "http",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"forecast"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "4906818"
+						},
+						{
+							"key": "type",
+							"value": "hour"
+						},
+						{
+							"key": "appid",
+							"value": "f6e3d1871714d43815b421020181ffd5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forecast_london",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea14df10-f41f-4c51-ac27-f4c51e723ee5",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"High temp is higher than low temp\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var high = jsonData.list[0].main.temp_max - jsonData.list[0].main.temp_min;",
+							"    pm.expect(high).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"Testing whether it is too windy for playing frisbee\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var windSpeed = jsonData.list[0].wind.speed;",
+							"    pm.expect(windSpeed).to.be.below(5);",
+							"});",
+							"",
+							"pm.test(\"Location in Northern Hemisphere\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var lat = jsonData.city.coord.lat;",
+							"    pm.expect(lat).to.be.above(0);",
+							"});",
+							"",
+							"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+							" ",
+							"tests[\"Has Content-Type\"] = contentTypeHeaderExists;",
+							" ",
+							"if (contentTypeHeaderExists) {",
+							"    tests[\"Content-Type is application/json\"] = ",
+							"      responseHeaders[\"Content-Type\"].has(\"application/json\");",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://api.openweathermap.org/data/2.5/forecast?id=2643743&type=hour&appid=f6e3d1871714d43815b421020181ffd5",
+					"protocol": "http",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"forecast"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2643743"
+						},
+						{
+							"key": "type",
+							"value": "hour"
+						},
+						{
+							"key": "appid",
+							"value": "f6e3d1871714d43815b421020181ffd5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
