@@ -21,7 +21,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "806b06e0-c69e-4c7d-925b-46df4ac11de5",
+						"id": "2edde6ba-e8f6-4aa2-b760-4d07cbaaef03",
 						"type": "text/javascript",
 						"exec": [
 							"",
@@ -29,13 +29,13 @@
 							"pm.test(\"High temp is higher than low temp\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    var high = jsonData.main.temp_max - jsonData.main.temp_min;",
-							"    pm.expect(high).to.be.above(0);",
+							"    pm.expect(high).to.be.above(-0.00000000001);",
 							"});",
 							"",
 							"pm.test(\"Testing whether the weather is chilly\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    var high = jsonData.main.temp;",
-							"    pm.expect(high).to.be.below(293);",
+							"    pm.expect(high).to.be.below(294);",
 							"});",
 							"",
 							"pm.test(\"Testing whether the conditions are good enough for me to go out\", function () {",
@@ -100,15 +100,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f9704268-5976-42b1-b093-4b4628ce3c0b",
+						"id": "03d561fc-77d1-40cb-a6bd-4a02a9886b9c",
 						"type": "text/javascript",
 						"exec": [
-							"",
-							"",
 							"pm.test(\"High temp is higher than low temp\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    var high = jsonData.main.temp_max - jsonData.main.temp_min;",
-							"    pm.expect(high).to.be.above(0);",
+							"    pm.expect(high).to.be.above(-0.000000000001);",
 							"});",
 							"",
 							"pm.test(\"Testing whether it is too windy for playing frisbee\", function () {",
